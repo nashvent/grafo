@@ -1,1 +1,1 @@
-hola.py
+print("hola nash")
