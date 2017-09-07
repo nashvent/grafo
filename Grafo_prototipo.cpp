@@ -6,6 +6,7 @@
 #include <vector>
 #include <queue>  
 using namespace std;
+//Ya no usaremos std ...
 
 class CEdge; //declaracion previa de la clase de aristas
 
