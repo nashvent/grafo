@@ -32,10 +32,10 @@ Los pull-request hazlos directo en github
 Si existen conflictos en el pull-request al hacer merge(osea unir tu rama a master)
 >> git pull link_repo
 >> git status
-..luego te avisara en que archivos existe conflicto y tendras que resolverlos manualmente, en el archivo encontraras cosas como estas
->>>>HEAD 
+luego te avisara en que archivos existe conflicto y tendras que resolverlos manualmente, en el archivo encontraras cosas como estas
+HEAD 
 ======== 
-..borralas y guarda los cambios
+borralas y guarda los cambios
 >> git add .
 >> git commit -m "Agrege un cambio"
 >> git push link_repo mi_rama
