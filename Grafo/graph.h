@@ -23,9 +23,10 @@ struct Graph{
     bool checkDimension(int*,int*);
     void randomInsert(QGraphicsScene *,QBrush,QPen,int);//Inserta una cantidad de nodos
     void cuadricular(QGraphicsScene *,QPen);
-    void searchBlind(int*,int*);
+    string searchBlind(QGraphicsScene *,QPen,int*,int*);
     void print();
     void printStatic();
+    void colorNode(QGraphicsScene *,QPen,QBrush,QBrush,int*,int*);
     //void graphicsNode(QGraphicsScene *,int *);
 
     void aStar(int*,int*);//Busqueda desde un nodo inicial y final

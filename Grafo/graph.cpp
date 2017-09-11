@@ -62,28 +62,34 @@ void Graph::cuadricular(QGraphicsScene * scene,QPen outlinePen){
 
 }
 
-void Graph::searchBlind(int * begin, int * end){
+string Graph::searchBlind(QGraphicsScene * scene,QPen outlinePen,int * begin, int * end){
+    string label;
     vector<Node*> result;
     Node * x=searchNode(begin);
     Node * y=searchNode(end);
     result.push_back(x);
+    label="\n{("+to_string(x->coord[0])+","+to_string(x->coord[1])+")}\n";
+    Node * temp;
 
     while(result[0]->coord != y->coord){
-        cout<<"aqui"<<endl;
-        Node * temp=result[0];
+        temp=result[0];
         temp->visit=true;
-        temp->printNode();
-        cout<<" -> ";
         result.erase(result.begin());
         for (int i = 0; i < temp->edges.size(); i++) {
             Node * p=temp->edges[i]->whoBelongEdge(temp);
             if(p->visit==false){
                 p->visit=true;
+                scene->addLine(temp->coord[1]*len,temp->coord[0]*len,p->coord[1]*len,p->coord[0]*len,outlinePen);
                 result.push_back(p);
             }
         }
+        label+="{";
+        for (int k = 0; k < result.size(); ++k) {
+            label+="("+to_string(result[k]->coord[0])+","+to_string(result[k]->coord[1])+") ";
+        }
+        label+="}\n";
     }
-    result[0]->printNode();
+    return label;
 }
 
 Node* Graph::searchNode(int *pos){
@@ -198,6 +204,14 @@ void Graph::printStatic(){
         }
         cout<<endl;
     }
+}
+
+void Graph::colorNode(QGraphicsScene *scene,QPen outlinePen, QBrush ini, QBrush fin, int *x, int *y)
+{
+    Node *inicio=searchNode(x);
+    Node *final=searchNode(y);
+    scene->addEllipse(inicio->coord[1]*len,inicio->coord[0]*len,10,10,outlinePen,ini);
+    scene->addEllipse(final->coord[1]*len,final->coord[0]*len,10,10,outlinePen,fin);
 }
 /*
 void Graph::graphicsNode(QGraphicsScene * scene,int* var)
