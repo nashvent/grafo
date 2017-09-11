@@ -13,29 +13,36 @@ bool Graph::checkDimension(int*A,int*B){ //A es el tamaño de la matriz, y B es 
     return (A[0]>B[0] and A[1]>B[1]);
 }
 
-void Graph::randomInsert(int total){
+void Graph::randomInsert(QGraphicsScene * scene,QBrush redBrush,QPen outlinePen,int total){
     int x,y;
     srand (time(NULL));
     for (int i = 0; i < total; i++) {
         x=rand() % size[0];
         y=rand() % size[1];
         int coord[2]={x,y};
+        scene->addEllipse(coord[1]*len,coord[0]*len,10,10,outlinePen,redBrush);
         insertNode(coord);     
     }
     cout<<endl;
 }
 
-void Graph::cuadricular(){
+void Graph::cuadricular(QGraphicsScene * scene,QPen outlinePen){
     srand (time(NULL));
     vector<Node*>nStaticTemp=nStatic;
     while (nStaticTemp.size()>1) {
         Node* temp=nStaticTemp[0];
         if(temp->edges.size()<maxEdge){
-            while ( temp->edges.size()<maxEdge) {
+            while ( temp->edges.size()<maxEdge and nStaticTemp.size()>0) {
+                cout<<"hola"<<endl;
                 int rd=rand()% nStaticTemp.size();
                 if(nStaticTemp[rd]->edges.size()<maxEdge){
-                    insertEdge(1+rand() % 5,temp->coord,nStaticTemp[rd]->coord);
+                    insertEdge(0,temp->coord,nStaticTemp[rd]->coord);
+                    scene->addLine(temp->coord[1]*len,temp->coord[0]*len,
+                                   nStaticTemp[rd]->coord[1]*len,nStaticTemp[rd]->coord[0]*len,
+                                   outlinePen);
                 }
+                else
+                    nStaticTemp.erase(nStaticTemp.begin()+rd);
             }
             nStaticTemp.erase(nStaticTemp.begin());
         }
@@ -46,10 +53,12 @@ void Graph::cuadricular(){
 
 void Graph::searchBlind(int * begin, int * end){
     vector<Node*> result;
+    Node * x=searchNode(begin);
     Node * y=searchNode(end);
-    result.push_back(searchNode(begin));
+    result.push_back(x);
 
     while(result[0]->coord != y->coord){
+        cout<<"aqui"<<endl;
         Node * temp=result[0];
         temp->visit=true;
         temp->printNode();
@@ -144,10 +153,10 @@ void Graph::print() {
         for (int y = 0; y <nodes[0].size();y++) {
             Node*temp=nodes[x][y];
             if(temp!=NULL){
-                cout<<" * ";
+                cout<<"*";
             }
             else{
-                cout<<" - ";
+                cout<<"-";
             }
         }
         cout<<endl;
@@ -163,5 +172,72 @@ void Graph::printStatic(){
         }
         cout<<endl;
     }
+}
+/*
+void Graph::graphicsNode(QGraphicsScene * scene,int* var)
+{
+    redBrush(Qt::red);
+    outlinePen(Qt::black);
+    outlinePen.setWidth(2);
+    scene->addEllipse(var[0],var[1],20,20,outlinePen,redBrush);
+}*/
+
+template<class T>
+bool existeEnVector(vector<T>V,T elemento){
+    for(int x=0;x<V.size();x++){
+        if(V[x]==elemento)
+            return true;
+    }
+    return false;
+}
+
+
+void Graph::aStar(int *inicio, int *final){
+    Node* current=searchNode(inicio);
+    Node* fin=searchNode(final);
+    vector<Node*>openList,closeList;
+    openList.push_back(current);
+    while(openList.size()>0 and current!=fin){
+        current=openList[0];
+        for(int x=0;x<current->edges.size();x++){
+            Node*vecino=current->edges[x]->whoBelongEdge(current);
+            if(vecino->aStarVisit==false){
+                int gN=current->edges[x]->weight;
+                int hN=distanciaEuclidiana(vecino->coord,fin->coord);
+                int fN=gN+hN;
+                if(existeEnVector(openList,vecino)){
+                    if(fN<vecino->fN){
+                        vecino->padre=current;
+                        vecino->gN=gN;
+                        vecino->fN=fN;
+                    }
+                }
+                else{
+                    openList.push_back(vecino);
+                    vecino->gN=gN;
+                    vecino->hN=hN;
+                    vecino->fN=fN;
+                    vecino->padre=current;
+                }
+            }
+        }
+        current->aStarVisit=true;
+        openList.erase(openList.begin());
+
+    }
+    if(openList.size()==0){
+        cout<<"No hay camino"<<endl;
+    }
+    else{
+        while(current!=NULL){
+            current->printNode();
+            cout<<" <- ";
+            current=current->padre;
+        }
+    }
+}
+
+int Graph::distanciaEuclidiana(int *A, int *B){
+    return abs(A[0]-B[0])+abs(A[1]-B[1]);
 }
 
