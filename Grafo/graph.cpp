@@ -30,28 +30,37 @@ void Graph::cuadricular(){
     vector<Node*>nStaticTemp=nStatic;
     while (nStaticTemp.size()>1) {
         Node* temp=nStaticTemp[0];
-        if(temp->edges.size()<4){
-            for (int j = 1; j <= 4 && j<nStaticTemp.size(); j++) {
-                insertEdge(1+rand() % 4,temp->coord,nStaticTemp[j]->coord);
+        if(temp->edges.size()<maxEdge){
+            while ( temp->edges.size()<maxEdge) {
+                insertEdge(1+rand() % 5,temp->coord,nStaticTemp[rand()% nStaticTemp.size()]->coord);
             }
             nStaticTemp.erase(nStaticTemp.begin());
         }
+        else
+            nStaticTemp.erase(nStaticTemp.begin());
     }
 }
 
 vector<Node *> Graph::searchBlind(int * begin, int * end){
     vector<Node*> result;
     Node * x=searchNode(begin);
-    Node * y=searchNode(begin);
+    Node * y=searchNode(end);
+    cout<<endl;
+    x->printNode();
+    y->printNode();
+    cout<<"recorre"<<endl;
     result.push_back(x);
-    cout<<"hoa"<<endl;
-    while(result[0]->coord!=y->coord){
-        cout<<"holllla"<<endl;
+
+    while(result[0]->coord != y->coord){
         Node * temp=result[0];
+        temp->visit=true;
         result.erase(result.begin());
-        for (int i = 0; i < temp->edges.size(); ++i) {
-            result.push_back(temp->edges[i]->whoBelongEdge(temp));
-            result[0]->printNode();
+        for (int i = 0; i < temp->edges.size(); i++) {
+            Node * p=temp->edges[i]->whoBelongEdge(temp);
+            if(p->visit==false){
+                result.push_back(p);
+                p->printNode();
+            }
         }
         cout<<endl;
     }
@@ -90,7 +99,7 @@ bool Graph::insertNode(int *posNode){
 bool Graph::insertEdge(int peso,int *nA, int *nB){
     Node* nodeA=searchNode(nA);
     Node* nodeB=searchNode(nB);
-    if(nodeA!=NULL and nodeB!=NULL){
+    if(nodeA!=NULL and nodeB!=NULL and nodeA->shareEdge(nodeB)==NULL and nodeA!=nodeB){
         Edge* tempEdge=new Edge(peso,nodeA,nodeB);
         nodeA->edges.push_back(tempEdge);
         nodeB->edges.push_back(tempEdge);
@@ -126,18 +135,35 @@ bool Graph::deleteNode(int *coordNode) { //Falta aun
 
 void Graph::print() {
     for(int x=0;x<nodes.size();x++){
+        cout<<x;
+        if(x<10)
+            cout<<":   ";
+        if(x>=10 and x<100)
+            cout<<":  ";
+        if(x>=100)
+            cout<<": ";
+
         for (int y = 0; y <nodes[0].size();y++) {
             Node*temp=nodes[x][y];
             if(temp!=NULL){
-                temp->printNode();
-                if(temp->edges.size()>0){
-                    cout<<"aristas: ";
-                    temp->printEdges();
-                }
-                cout<<endl;
+                cout<<" * ";
+            }
+            else{
+                cout<<" - ";
             }
         }
+        cout<<endl;
+    }
+}
 
+void Graph::printStatic(){
+    for(int x=0;x<nStatic.size();x++){
+        nStatic[x]->printNode();
+        if(nStatic[x]->edges.size()>0){
+            cout<<"aristas: ";
+            nStatic[x]->printEdges();
+        }
+        cout<<endl;
     }
 }
 

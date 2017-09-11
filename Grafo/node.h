@@ -8,6 +8,7 @@ struct Edge;
 struct Node{
     int coord[2];
     vector<Edge*> edges;
+    bool visit;
     Node(); //Cuando se crea un nodo sentinela, sin posicion
     Node(int*); //Cuando ya se crea un nodo con posicion
     void printNode(); //Imprime la posicion del Nodo

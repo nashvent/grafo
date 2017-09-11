@@ -5,6 +5,7 @@
 struct Graph{
     vector<vector<Node*>>nodes;
     int size[2];
+    int maxEdge=4;
     vector<Node*> nStatic;
     //list<Node*>nodes;
     Graph(int*); //Constructor del grafo recibe las dimesiones en un array
@@ -19,6 +20,7 @@ struct Graph{
     void cuadricular();
     vector<Node*> searchBlind(int*,int*);
     void print();
+    void printStatic();
 };
 
 
