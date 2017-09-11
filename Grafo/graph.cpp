@@ -13,8 +13,7 @@ bool Graph::checkDimension(int*A,int*B){ //A es el tamaño de la matriz, y B es 
     return (A[0]>B[0] and A[1]>B[1]);
 }
 
-void Graph::randomInsert(int total)
-{
+void Graph::randomInsert(int total){
     int x,y;
     srand (time(NULL));
     for (int i = 0; i < total; i++) {
@@ -26,8 +25,7 @@ void Graph::randomInsert(int total)
     cout<<endl;
 }
 
-void Graph::cuadricular()
-{
+void Graph::cuadricular(){
     srand (time(NULL));
     vector<Node*>nStaticTemp=nStatic;
     while (nStaticTemp.size()>1) {
@@ -39,6 +37,26 @@ void Graph::cuadricular()
             nStaticTemp.erase(nStaticTemp.begin());
         }
     }
+}
+
+vector<Node *> Graph::searchBlind(int * begin, int * end){
+    vector<Node*> result;
+    Node * x=searchNode(begin);
+    Node * y=searchNode(begin);
+    result.push_back(x);
+    cout<<"hoa"<<endl;
+    while(result[0]->coord!=y->coord){
+        cout<<"holllla"<<endl;
+        Node * temp=result[0];
+        result.erase(result.begin());
+        for (int i = 0; i < temp->edges.size(); ++i) {
+            result.push_back(temp->edges[i]->whoBelongEdge(temp));
+            result[0]->printNode();
+        }
+        cout<<endl;
+    }
+
+    return result;
 }
 
 Node* Graph::searchNode(int *pos){

@@ -23,6 +23,7 @@ struct Edge{
     Edge(int,Node*,Node*); //La arista recibe peso y dos nodos (A y B)
     void printEdge(Node*); //Imprime la informacion de la arista NodoA - peso - Nodo B
     bool belongNode(Node*); //Consulta si un nodo nodeX pertenece a la arista
+    Node* whoBelongEdge(Node*); //Quien comparte esta arista
     bool autoRemove();
 };
 
