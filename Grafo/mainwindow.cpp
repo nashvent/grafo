@@ -65,5 +65,18 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
+    QPen outlinePen(Qt::red);
+    QBrush ini(Qt::blue);
+    QBrush fin(Qt::green);
+
+    QString x,y,a,b;
+    x= ui->i_x->text();
+    y= ui->i_y->text();
+    a= ui->f_x->text();
+    b= ui->f_y->text();
+    int p1[2]={x.toInt(),y.toInt()};
+    int p2[2]={a.toInt(),b.toInt()};
+    g->colorNode(scene,outlinePen,ini,fin,p1,p2);
+
     cout<<"click click clik"<<endl;
 }
