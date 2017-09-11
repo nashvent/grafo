@@ -32,7 +32,10 @@ void Graph::cuadricular(){
         Node* temp=nStaticTemp[0];
         if(temp->edges.size()<maxEdge){
             while ( temp->edges.size()<maxEdge) {
-                insertEdge(1+rand() % 5,temp->coord,nStaticTemp[rand()% nStaticTemp.size()]->coord);
+                int rd=rand()% nStaticTemp.size();
+                if(nStaticTemp[rd]->edges.size()<maxEdge){
+                    insertEdge(1+rand() % 5,temp->coord,nStaticTemp[rd]->coord);
+                }
             }
             nStaticTemp.erase(nStaticTemp.begin());
         }
@@ -58,11 +61,15 @@ vector<Node *> Graph::searchBlind(int * begin, int * end){
         for (int i = 0; i < temp->edges.size(); i++) {
             Node * p=temp->edges[i]->whoBelongEdge(temp);
             if(p->visit==false){
+                p->visit=true;
                 result.push_back(p);
-                p->printNode();
             }
         }
+        for (int k = 0; k < result.size(); ++k) {
+            result[k]->printNode();
+        }
         cout<<endl;
+
     }
 
     return result;
