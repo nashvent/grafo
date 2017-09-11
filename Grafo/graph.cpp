@@ -167,13 +167,62 @@ void Graph::printStatic(){
     }
 }
 
+template<class T>
+bool existeEnVector(vector<T>V,T elemento){
+    for(int x=0;x<V.size();x++){
+        if(V[x]==elemento)
+            return true;
+    }
+    return false;
+}
+
+
 void Graph::aStar(int *inicio, int *final){
+    Node* current=searchNode(inicio);
     Node* fin=searchNode(final);
     vector<Node*>openList,closeList;
-    openList.push_back(searchNode(inicio));
-    while(openList.size()>0){
+    openList.push_back(current);
+    while(openList.size()>0 and current!=fin){
         Node* current=openList[0];
-
+        for(int x=0;x<current->edges.size();x++){
+            Node*vecino=current->edges[x]->whoBelongEdge(curret);
+            if(vecino->aStarVisit==false){
+                int gN=current->edges[x]->weight;
+                int hN=distanciaEuclidiana(vecino->coord,fin->coord);
+                int fN=gN+hN;
+                if(existeEnVector(openList,vecino)){
+                    if(fN<vecino->fN){
+                        vecino->padre=current;
+                        vecino->gN=gN;
+                        vecino->fN=fN;
+                    }
+                }
+                else{
+                    openList.push_back(vecino);
+                    vecino->gN=gN;
+                    vecino->hN=hN;
+                    vecino->fN=fN;
+                    vecino->padre=current;
+                }
+            }
+        }
+        current->aStarVisit=true;
+        openList.erase(openList.begin());
+        current=openList[0];
     }
+    if(openList.size()==0){
+        cout<<"No hay camino"<<endl;
+    }
+    else{
+        while(current!=NULL){
+            current->printNode();
+            cout<<" <- ";
+            current=current->padre;
+        }
+    }
+}
+
+int Graph::distanciaEuclidiana(int *A, int *B){
+    return abs(A[0]-B[0])+abs(A[1]-B[1]);
 }
 
