@@ -13,6 +13,7 @@ Node::Node(int*position){
     visit=false;
     aStarVisit=false;
     padre=NULL;
+    gN=fN=hN=0;
 }
 
 void Node::printNode(){

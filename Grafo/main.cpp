@@ -8,7 +8,7 @@ int main(int argc, char *argv[]){
 /*******************Parte grafica********************/
     QApplication a(argc, argv);
     MainWindow w;
-    w.graphicsNode(100,100); // int n_nodes, int tamanio grafo
+    w.graphicsNode(5,20); // int n_nodes, int tamanio grafo
     w.show();
 
     return a.exec();

@@ -17,21 +17,26 @@ void MainWindow::graphicsNode(int tam,int size)
     ui->graphicsView->setScene(scene);
     QBrush redBrush(Qt::yellow);
     QPen outlinePen(Qt::black);
-
-    g->randomInsert(scene,redBrush,outlinePen,tam);
+    vector<int>predefinido={18,14,14,9,19,7,17,1,0,8};
+    for(int x=0;x<predefinido.size()-1;x=x+2){
+        int y[2];
+        y[0]=predefinido[x];
+        y[1]=predefinido[x+1];
+        g->insertNode(y);
+    }
+    //g->randomInsert(scene,redBrush,outlinePen,tam);
     g->cuadricular(scene,outlinePen);
     g->printStatic();
     g->print();
 
- /*   cout<<"inicio: ";
+    cout<<"inicio: ";
     g->nStatic[0]->printNode();
     cout<<"fin: ";
-    g->nStatic[1]->printNode();
+    g->nStatic[g->nStatic.size()-1]->printNode();
     cout<<endl;
     cout<<"A*"<<endl;
     g->aStar(g->nStatic[0]->coord,g->nStatic[1]->coord);
-*/
-    cout<<"\n aristas"<<endl;
+
 }
 
 MainWindow::~MainWindow()
@@ -61,4 +66,9 @@ void MainWindow::on_pushButton_clicked()
     dialog->result(res);
     dialog->show();
     //ui->lb_result->setText(qstr);
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    cout<<"click click clik"<<endl;
 }
