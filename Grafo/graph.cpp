@@ -33,11 +33,13 @@ void Graph::cuadricular()
     while (nStaticTemp.size()>1) {
         Node* temp=nStaticTemp[0];
         if(temp->edges.size()<4){
-            for (int j = 1; j <= 4 && j<nStaticTemp.size(); j++) {
+            for (int j = 1; j <= 4 && j<nStaticTemp.size() && temp->edges.size()<4; j++) {
                 insertEdge(1+rand() % 4,temp->coord,nStaticTemp[j]->coord);
             }
             nStaticTemp.erase(nStaticTemp.begin());
         }
+        else
+            nStaticTemp.erase(nStaticTemp.begin());
     }
 }
 
@@ -108,18 +110,35 @@ bool Graph::deleteNode(int *coordNode) { //Falta aun
 
 void Graph::print() {
     for(int x=0;x<nodes.size();x++){
+        cout<<x;
+        if(x<10)
+            cout<<":   ";
+        if(x>=10 and x<100)
+            cout<<":  ";
+        if(x>=100)
+            cout<<": ";
+
         for (int y = 0; y <nodes[0].size();y++) {
             Node*temp=nodes[x][y];
             if(temp!=NULL){
-                temp->printNode();
-                if(temp->edges.size()>0){
-                    cout<<"aristas: ";
-                    temp->printEdges();
-                }
-                cout<<endl;
+                cout<<" * ";
+            }
+            else{
+                cout<<" - ";
             }
         }
+        cout<<endl;
+    }
+}
 
+void Graph::printStatic(){
+    for(int x=0;x<nStatic.size();x++){
+        nStatic[x]->printNode();
+        if(nStatic[x]->edges.size()>0){
+            cout<<"aristas: ";
+            nStatic[x]->printEdges();
+        }
+        cout<<endl;
     }
 }
 
