@@ -20,7 +20,17 @@ void MainWindow::graphicsNode(int tam,int size)
 
     g->randomInsert(scene,redBrush,outlinePen,tam);
     g->cuadricular(scene,outlinePen);
+    g->printStatic();
     g->print();
+
+ /*   cout<<"inicio: ";
+    g->nStatic[0]->printNode();
+    cout<<"fin: ";
+    g->nStatic[1]->printNode();
+    cout<<endl;
+    cout<<"A*"<<endl;
+    g->aStar(g->nStatic[0]->coord,g->nStatic[1]->coord);
+*/
 }
 
 MainWindow::~MainWindow()
