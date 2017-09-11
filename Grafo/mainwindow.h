@@ -7,6 +7,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include "graph.h"
+#include "dialog.h"
 
 namespace Ui {
 class MainWindow;

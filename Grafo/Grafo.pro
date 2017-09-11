@@ -27,12 +27,15 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     node.cpp \
-    graph.cpp
+    graph.cpp \
+    dialog.cpp
 
 HEADERS += \
         mainwindow.h \
     node.h \
-    graph.h
+    graph.h \
+    dialog.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    dialog.ui

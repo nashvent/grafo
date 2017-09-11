@@ -49,17 +49,12 @@ void Graph::cuadricular(QGraphicsScene * scene,QPen outlinePen){
             if(nStaticTemp[0]->edges.size()<maxEdge and nStaticTemp[x]->edges.size()<maxEdge){
                 insertEdge(0,nStaticTemp[0]->coord,nStaticTemp[x]->coord);
                 scene->addLine(nStaticTemp[0]->coord[1]*len,nStaticTemp[0]->coord[0]*len,
-                                                  nStaticTemp[x]->coord[1]*len,nStaticTemp[x]->coord[0]*len,
-               outlinePen);
+                               nStaticTemp[x]->coord[1]*len,nStaticTemp[x]->coord[0]*len,
+                               outlinePen);
             }
-
         }
         nStaticTemp.erase(nStaticTemp.begin());
-
-
-    }
-
-
+    }   
 }
 
 string Graph::searchBlind(QGraphicsScene * scene,QPen outlinePen,int * begin, int * end){
@@ -68,9 +63,9 @@ string Graph::searchBlind(QGraphicsScene * scene,QPen outlinePen,int * begin, in
     Node * x=searchNode(begin);
     Node * y=searchNode(end);
     result.push_back(x);
-    label="\n{("+to_string(x->coord[0])+","+to_string(x->coord[1])+")}\n";
+    label="1.  {("+to_string(x->coord[0])+","+to_string(x->coord[1])+")}\n";
     Node * temp;
-
+    int cont=1;
     while(result[0]->coord != y->coord){
         temp=result[0];
         temp->visit=true;
@@ -83,12 +78,14 @@ string Graph::searchBlind(QGraphicsScene * scene,QPen outlinePen,int * begin, in
                 result.push_back(p);
             }
         }
-        label+="{";
+        //imprime la lista de aplitud
+        label+=to_string(++cont)+".  {";
         for (int k = 0; k < result.size(); ++k) {
             label+="("+to_string(result[k]->coord[0])+","+to_string(result[k]->coord[1])+") ";
         }
         label+="}\n";
     }
+    delVisit();
     return label;
 }
 
@@ -212,6 +209,26 @@ void Graph::colorNode(QGraphicsScene *scene,QPen outlinePen, QBrush ini, QBrush 
     Node *final=searchNode(y);
     scene->addEllipse(inicio->coord[1]*len,inicio->coord[0]*len,10,10,outlinePen,ini);
     scene->addEllipse(final->coord[1]*len,final->coord[0]*len,10,10,outlinePen,fin);
+}
+
+void Graph::delVisit()
+{
+    for (int i = 0; i < nStatic.size(); i++) {
+        nStatic[i]->visit=false;
+    }
+}
+
+void Graph::delColor(QGraphicsScene * scene,QBrush redBrush,QPen outlinePen)
+{
+    for (int i = 0; i < nStatic.size(); i++) {
+        scene->addEllipse(nStatic[i]->coord[1]*len,nStatic[i]->coord[0]*len,10,10,outlinePen,redBrush);
+        for (int j = 0; j < nStatic[i]->edges.size();j++) {
+            Node * belong=nStatic[i]->edges[j]->whoBelongEdge(nStatic[i]);
+            scene->addLine(nStatic[i]->coord[1]*len,nStatic[i]->coord[0]*len,
+                           belong->coord[1]*len,belong->coord[0]*len,
+                           outlinePen);
+        }
+    }
 }
 /*
 void Graph::graphicsNode(QGraphicsScene * scene,int* var)
