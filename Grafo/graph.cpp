@@ -237,14 +237,27 @@ void Graph::aStar(int *inicio, int *final){
     Node* fin=searchNode(final);
     vector<Node*>openList,closeList;
     openList.push_back(current);
-    while(openList.size()>0 and current!=fin){
-        current=openList[0];
+    while(openList.size()>0){
+        openList.erase(openList.begin());
+        closeList.insert(closeList.begin(),current);
+        cout<<"______________"<<endl;
+        cout<<"NuevaPasada"<<endl;
+        cout<<"______________"<<endl;
+
+        cout<<"current: ";
+        current->printNode();
+        cout<<endl;
         for(int x=0;x<current->edges.size();x++){
             Node*vecino=current->edges[x]->whoBelongEdge(current);
             if(vecino->aStarVisit==false){
-                int gN=current->edges[x]->weight;
+                int gN=current->edges[x]->weight+(distanciaEuclidiana(vecino->coord,current->coord));
                 int hN=distanciaEuclidiana(vecino->coord,fin->coord);
-                int fN=gN+hN;
+                int fN=gN+hN+current->fN;
+                cout<<"Vecino:";
+                vecino->printNode();
+                cout<<"gN actual:"<<vecino->gN<<endl;
+                cout<<"gN nuevo: "<<gN<<endl;
+
                 if(existeEnVector(openList,vecino)){
                     if(fN<vecino->fN){
                         vecino->padre=current;
@@ -260,18 +273,33 @@ void Graph::aStar(int *inicio, int *final){
                     vecino->padre=current;
                 }
             }
+
         }
+
+
+        cout<<"open list"<<endl;
+        printVectorNodo(openList);
+        cout<<"Close list"<<endl;
+        printVectorNodo(closeList);
+
+        if(closeList[0]==fin)
+            break;
+
         current->aStarVisit=true;
-        openList.erase(openList.begin());
+        current=openList[0];
+
 
     }
-    if(openList.size()==0){
+    if(openList.size()==0 and closeList[0]!=fin){
         cout<<"No hay camino"<<endl;
     }
     else{
+        cout<<"encontre camino"<<endl;
+        current=closeList[0];
         while(current!=NULL){
             current->printNode();
-            cout<<" <- ";
+            if(current->padre!=NULL)
+                cout<<" <- ";
             current=current->padre;
         }
     }
