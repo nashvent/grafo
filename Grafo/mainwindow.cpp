@@ -44,8 +44,8 @@ void MainWindow::on_pushButton_clicked()
     QPen outlinePen(Qt::red);
     QBrush ini(Qt::blue);
     QBrush fin(Qt::green);
+    QBrush yellow(Qt::yellow);
     QPen arista(Qt::black);
-
 
     QString x,y,a,b;
     x= ui->i_x->text();
@@ -54,8 +54,11 @@ void MainWindow::on_pushButton_clicked()
     b= ui->f_y->text();
     int p1[2]={x.toInt(),y.toInt()};
     int p2[2]={a.toInt(),b.toInt()};
+    g->delColor(scene,yellow,arista);
     g->colorNode(scene,arista,ini,fin,p1,p2);
-    string result=g->searchBlind(scene,outlinePen,p1,p2);
-    QString qstr = QString::fromStdString(result);
-    ui->lb_result->setText(qstr);
+    string res=g->searchBlind(scene,outlinePen,p1,p2);
+    Dialog *dialog= new Dialog();
+    dialog->result(res);
+    dialog->show();
+    //ui->lb_result->setText(qstr);
 }
