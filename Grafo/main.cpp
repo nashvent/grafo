@@ -2,23 +2,19 @@
 #include <QApplication>
 #include "graph.h"
 
-int main(){
-    int tam[2]={20,20};
+int main(int argc, char *argv[]){
+    int tam[2]={10,10};
     Graph *grafo=new Graph(tam);
-    int pos[2]={1,2};
-    int pos2[2]={3,3};
 
-    grafo->randomInsert(7);
-
+    grafo->randomInsert(10);
     cout<<"ADD EDGES"<<endl;
     grafo->cuadricular();
-
-    grafo->print();
-    cout<<"print Static"<<endl;
     grafo->printStatic();
-    int x;
-    x=getchar();
-    cout<<x<<endl;
+    grafo->searchBlind(grafo->nStatic[0]->coord,grafo->nStatic[4]->coord);
+
 /*******************Parte grafica********************/
-    return 0;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }

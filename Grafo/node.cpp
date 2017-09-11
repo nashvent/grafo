@@ -4,11 +4,13 @@
 /*Implementacion Nodo*/
 Node::Node(){
     coord[0]=coord[1]=-1;
+    visit=false;
 }
 
 Node::Node(int*position){
     coord[0]=position[0];
     coord[1]=position[1];
+    visit=false;
 }
 
 void Node::printNode(){
@@ -62,6 +64,17 @@ void Edge::printEdge(Node*cNode){
     else{
         eNodes[0]->printNode();
     }
+
+}
+Node* Edge::whoBelongEdge(Node*cNode){
+
+    if(eNodes[0]==cNode){
+        return eNodes[1];
+    }
+    else if(eNodes[1]==cNode){
+        return eNodes[0];
+    }
+    return NULL;
 
 }
 
