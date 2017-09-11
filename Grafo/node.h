@@ -1,7 +1,9 @@
 #ifndef NODE_H
 #define NODE_H
+
 #include "bits/stdc++.h"
-#include "vector"
+using namespace std;
+
 struct Edge;
 struct Node{
     int coord[2];

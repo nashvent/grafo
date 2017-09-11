@@ -46,7 +46,6 @@ bool Node::deleteEdges() {
         edges[x]->autoRemove();
 }
 
-
 /** Implementacion Arista **/
 
 Edge::Edge(int peso,Node*nodeA,Node*nodeB){
