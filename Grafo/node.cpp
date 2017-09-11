@@ -11,6 +11,8 @@ Node::Node(int*position){
     coord[0]=position[0];
     coord[1]=position[1];
     visit=false;
+    aStarVisit=false;
+    padre=NULL;
 }
 
 void Node::printNode(){

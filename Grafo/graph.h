@@ -21,7 +21,12 @@ struct Graph{
     vector<Node*> searchBlind(int*,int*);
     void print();
     void printStatic();
+
+    void aStar(int*,int*);//Busqueda desde un nodo inicial y final
+    int distanciaEuclidiana(int*,int*);
 };
+
+
 
 
 #endif // GRAPH_H
