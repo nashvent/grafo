@@ -15,7 +15,7 @@ struct Node{
 
     Node(); //Cuando se crea un nodo sentinela, sin posicion
     Node(int*); //Cuando ya se crea un nodo con posicion
-    void printNode(); //Imprime la posicion del Nodo
+    string printNode(); //Imprime la posicion del Nodo
     void printEdges(); //Imprime a todas las aristas que le pertenecen
     Edge* shareEdge(Node*); //Consulta si ese nodo comparte arista con otro nodeX
     bool deleteEdge(Node*); //Elimina la arista con el nodo input nodo

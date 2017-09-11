@@ -30,7 +30,7 @@ struct Graph{
     void delVisit();
     void delColor(QGraphicsScene *,QBrush,QPen);
 
-    void aStar(int*,int*);//Busqueda desde un nodo inicial y final
+    string aStar(QGraphicsScene *,QPen,int*,int*);//Busqueda desde un nodo inicial y final
     //int distanciaEuclidiana(int*,int*);
     vector<Node*> sortStaticTemp(vector<Node*>);
 };
