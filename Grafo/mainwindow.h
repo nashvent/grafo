@@ -3,6 +3,11 @@
 
 #include <QMainWindow>
 
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsItem>
+#include "graph.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -12,8 +17,17 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    QGraphicsScene *scene;
+    QGraphicsEllipseItem *circle;
+    QGraphicsTextItem *text;
+    QGraphicsLineItem *line;
+    Graph *g;
     explicit MainWindow(QWidget *parent = 0);
+    void graphicsNode(int,int);
     ~MainWindow();
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.4.0, 2017-09-09T11:30:41. -->
+<<<<<<< HEAD
+<!-- Written by QtCreator 4.4.0, 2017-09-10T22:06:03. -->
+=======
+<!-- Written by QtCreator 4.4.0, 2017-09-10T22:06:51. -->
+>>>>>>> 66f05579293008e061464428213f409761430a59
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{5851e288-0f29-4a8a-8f98-2e2e101553d2}</value>
+  <value type="QByteArray">{0ffeccb5-d45e-4bef-8945-f1dfdb60223f}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -285,8 +289,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Grafo</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/Nash/Documents/Grafo/Grafo.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Grafo2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/vane/Documents/IA/grafo/Grafo/Grafo.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">Grafo.pro</value>
