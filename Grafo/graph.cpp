@@ -72,6 +72,7 @@ string Graph::searchBlind(QGraphicsScene * scene,QPen outlinePen,int * begin, in
                 result.push_back(p);
             }
         }
+        //imprime la lista de aplitud
         label+="{";
         for (int k = 0; k < result.size(); ++k) {
             label+="("+to_string(result[k]->coord[0])+","+to_string(result[k]->coord[1])+") ";
