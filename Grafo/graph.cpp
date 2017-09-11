@@ -13,6 +13,34 @@ bool Graph::checkDimension(int*A,int*B){ //A es el tamaño de la matriz, y B es 
     return (A[0]>B[0] and A[1]>B[1]);
 }
 
+void Graph::randomInsert(int total)
+{
+    int x,y;
+    srand (time(NULL));
+    for (int i = 0; i < total; i++) {
+        x=rand() % size[0];
+        y=rand() % size[1];
+        int coord[2]={x,y};
+        insertNode(coord);     
+    }
+    cout<<endl;
+}
+
+void Graph::cuadricular()
+{
+    srand (time(NULL));
+    vector<Node*>nStaticTemp=nStatic;
+    while (nStaticTemp.size()>1) {
+        Node* temp=nStaticTemp[0];
+        if(temp->edges.size()<4){
+            for (int j = 1; j <= 4 && j<nStaticTemp.size(); j++) {
+                insertEdge(1+rand() % 4,temp->coord,nStaticTemp[j]->coord);
+            }
+            nStaticTemp.erase(nStaticTemp.begin());
+        }
+    }
+}
+
 Node* Graph::searchNode(int *pos){
     Node* resp=NULL;
     if(checkDimension(size,pos))
@@ -34,6 +62,8 @@ bool Graph::insertNode(int *posNode){
     if(searchNode(posNode)==NULL){
         Node* tempNode=new Node(posNode);
         nodes[posNode[0]][posNode[1]]=tempNode;
+        nStatic.push_back(tempNode);
+        tempNode->printNode();
         return true;
     }
     return false;
@@ -92,6 +122,4 @@ void Graph::print() {
 
     }
 }
-
-
 
