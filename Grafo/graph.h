@@ -18,6 +18,7 @@ struct Graph{
     void randomInsert(int);//Inserta una cantidad de nodos
     void cuadricular();
     void print();
+    void printStatic();
 };
 
 
