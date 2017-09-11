@@ -19,7 +19,11 @@ struct Graph{
     void cuadricular();
     void print();
     void printStatic();
+
+    void aStar(int*,int*);//Busqueda desde un nodo inicial y final
 };
+
+
 
 
 #endif // GRAPH_H

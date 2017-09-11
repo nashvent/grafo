@@ -143,9 +143,12 @@ void Graph::printStatic(){
 }
 
 void Graph::aStar(int *inicio, int *final){
-    Node* ini=searchNode(inicio);
+    //Node* ini=searchNode(inicio);
     Node* fin=searchNode(final);
     vector<Node*>openList,closeList;
-
+    openList.push_back(searchNode(inicio));
+    while(openList.size()>0){
+        
+    }
 }
 

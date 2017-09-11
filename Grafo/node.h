@@ -15,6 +15,9 @@ struct Node{
     Edge* shareEdge(Node*); //Consulta si ese nodo comparte arista con otro nodeX
     bool deleteEdge(Node*); //Elimina la arista con el nodo input nodo
     bool deleteEdges();
+    Node* padre; // para A*
+    int gN,hN,fN; // para A*
+    bool visit;
 };
 
 struct Edge{
