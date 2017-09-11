@@ -13,19 +13,20 @@ bool Graph::checkDimension(int*A,int*B){ //A es el tamaño de la matriz, y B es 
     return (A[0]>B[0] and A[1]>B[1]);
 }
 
-void Graph::randomInsert(int total){
+void Graph::randomInsert(QGraphicsScene * scene,QBrush redBrush,QPen outlinePen,int total){
     int x,y;
     srand (time(NULL));
     for (int i = 0; i < total; i++) {
         x=rand() % size[0];
         y=rand() % size[1];
         int coord[2]={x,y};
+        scene->addEllipse(coord[1]*len,coord[0]*len,10,10,outlinePen,redBrush);
         insertNode(coord);     
     }
     cout<<endl;
 }
 
-void Graph::cuadricular(){
+void Graph::cuadricular(QGraphicsScene * scene,QPen outlinePen){
     srand (time(NULL));
     vector<Node*>nStaticTemp=nStatic;
     while (nStaticTemp.size()>1) {
@@ -36,6 +37,9 @@ void Graph::cuadricular(){
                 int rd=rand()% nStaticTemp.size();
                 if(nStaticTemp[rd]->edges.size()<maxEdge){
                     insertEdge(0,temp->coord,nStaticTemp[rd]->coord);
+                    scene->addLine(temp->coord[1]*len,temp->coord[0]*len,
+                                   nStaticTemp[rd]->coord[1]*len,nStaticTemp[rd]->coord[0]*len,
+                                   outlinePen);
                 }
                 else
                     nStaticTemp.erase(nStaticTemp.begin()+rd);
@@ -47,19 +51,18 @@ void Graph::cuadricular(){
     }
 }
 
-vector<Node *> Graph::searchBlind(int * begin, int * end){
+void Graph::searchBlind(int * begin, int * end){
     vector<Node*> result;
     Node * x=searchNode(begin);
     Node * y=searchNode(end);
-    cout<<endl;
-    x->printNode();
-    y->printNode();
-    cout<<"recorre"<<endl;
     result.push_back(x);
 
     while(result[0]->coord != y->coord){
+        cout<<"aqui"<<endl;
         Node * temp=result[0];
         temp->visit=true;
+        temp->printNode();
+        cout<<" -> ";
         result.erase(result.begin());
         for (int i = 0; i < temp->edges.size(); i++) {
             Node * p=temp->edges[i]->whoBelongEdge(temp);
@@ -68,14 +71,8 @@ vector<Node *> Graph::searchBlind(int * begin, int * end){
                 result.push_back(p);
             }
         }
-        for (int k = 0; k < result.size(); ++k) {
-            result[k]->printNode();
-        }
-        cout<<endl;
-
     }
-
-    return result;
+    result[0]->printNode();
 }
 
 Node* Graph::searchNode(int *pos){
@@ -156,10 +153,10 @@ void Graph::print() {
         for (int y = 0; y <nodes[0].size();y++) {
             Node*temp=nodes[x][y];
             if(temp!=NULL){
-                cout<<" * ";
+                cout<<"*";
             }
             else{
-                cout<<" - ";
+                cout<<"-";
             }
         }
         cout<<endl;
@@ -176,6 +173,14 @@ void Graph::printStatic(){
         cout<<endl;
     }
 }
+/*
+void Graph::graphicsNode(QGraphicsScene * scene,int* var)
+{
+    redBrush(Qt::red);
+    outlinePen(Qt::black);
+    outlinePen.setWidth(2);
+    scene->addEllipse(var[0],var[1],20,20,outlinePen,redBrush);
+}*/
 
 template<class T>
 bool existeEnVector(vector<T>V,T elemento){
