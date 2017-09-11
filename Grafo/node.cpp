@@ -66,6 +66,17 @@ void Edge::printEdge(Node*cNode){
     }
 
 }
+Node* Edge::whoBelongEdge(Node*cNode){
+
+    if(eNodes[0]==cNode){
+        return eNodes[1];
+    }
+    else if(eNodes[1]==cNode){
+        return eNodes[0];
+    }
+    return NULL;
+
+}
 
 bool Edge::belongNode(Node* nodeX){
     if(eNodes[0]==nodeX or eNodes[1]==nodeX)

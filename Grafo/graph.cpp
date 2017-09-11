@@ -13,8 +13,7 @@ bool Graph::checkDimension(int*A,int*B){ //A es el tamaño de la matriz, y B es 
     return (A[0]>B[0] and A[1]>B[1]);
 }
 
-void Graph::randomInsert(int total)
-{
+void Graph::randomInsert(int total){
     int x,y;
     srand (time(NULL));
     for (int i = 0; i < total; i++) {
@@ -26,21 +25,47 @@ void Graph::randomInsert(int total)
     cout<<endl;
 }
 
-void Graph::cuadricular()
-{
+void Graph::cuadricular(){
     srand (time(NULL));
     vector<Node*>nStaticTemp=nStatic;
     while (nStaticTemp.size()>1) {
         Node* temp=nStaticTemp[0];
-        if(temp->edges.size()<4){
-            for (int j = 1; j <= 4 && j<nStaticTemp.size() && temp->edges.size()<4; j++) {
-                insertEdge(1+rand() % 4,temp->coord,nStaticTemp[j]->coord);
+        if(temp->edges.size()<maxEdge){
+            while ( temp->edges.size()<maxEdge) {
+                insertEdge(1+rand() % 5,temp->coord,nStaticTemp[rand()% nStaticTemp.size()]->coord);
             }
             nStaticTemp.erase(nStaticTemp.begin());
         }
         else
             nStaticTemp.erase(nStaticTemp.begin());
     }
+}
+
+vector<Node *> Graph::searchBlind(int * begin, int * end){
+    vector<Node*> result;
+    Node * x=searchNode(begin);
+    Node * y=searchNode(end);
+    cout<<endl;
+    x->printNode();
+    y->printNode();
+    cout<<"recorre"<<endl;
+    result.push_back(x);
+
+    while(result[0]->coord != y->coord){
+        Node * temp=result[0];
+        temp->visit=true;
+        result.erase(result.begin());
+        for (int i = 0; i < temp->edges.size(); i++) {
+            Node * p=temp->edges[i]->whoBelongEdge(temp);
+            if(p->visit==false){
+                result.push_back(p);
+                p->printNode();
+            }
+        }
+        cout<<endl;
+    }
+
+    return result;
 }
 
 Node* Graph::searchNode(int *pos){
@@ -74,7 +99,7 @@ bool Graph::insertNode(int *posNode){
 bool Graph::insertEdge(int peso,int *nA, int *nB){
     Node* nodeA=searchNode(nA);
     Node* nodeB=searchNode(nB);
-    if(nodeA!=NULL and nodeB!=NULL){
+    if(nodeA!=NULL and nodeB!=NULL and nodeA->shareEdge(nodeB)==NULL and nodeA!=nodeB){
         Edge* tempEdge=new Edge(peso,nodeA,nodeB);
         nodeA->edges.push_back(tempEdge);
         nodeB->edges.push_back(tempEdge);
@@ -143,9 +168,12 @@ void Graph::printStatic(){
 }
 
 void Graph::aStar(int *inicio, int *final){
-    Node* ini=searchNode(inicio);
     Node* fin=searchNode(final);
     vector<Node*>openList,closeList;
+    openList.push_back(searchNode(inicio));
+    while(openList.size()>0){
+        Node* current=openList[0];
 
+    }
 }
 
