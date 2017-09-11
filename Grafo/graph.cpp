@@ -1,6 +1,18 @@
 #include "graph.h"
 
+int distanciaEuclidiana(int *A, int *B){
+    return abs(A[0]-B[0])+abs(A[1]-B[1]);
+}
 
+void printVectorNodo(vector<Node*>V){
+    for(int x=0;x<V.size();x++){
+        V[x]->printNode();
+        cout<<" ";
+    }
+    cout<<endl;
+}
+
+Node*globalTemp;
 /* Implementacion grafo */
 Graph::Graph(int*tam){
     size[0]=tam[0];
@@ -26,29 +38,28 @@ void Graph::randomInsert(QGraphicsScene * scene,QBrush redBrush,QPen outlinePen,
     cout<<endl;
 }
 
+
 void Graph::cuadricular(QGraphicsScene * scene,QPen outlinePen){
-    srand (time(NULL));
     vector<Node*>nStaticTemp=nStatic;
-    while (nStaticTemp.size()>1) {
-        Node* temp=nStaticTemp[0];
-        if(temp->edges.size()<maxEdge){
-            while ( temp->edges.size()<maxEdge and nStaticTemp.size()>0) {
-                cout<<"hola"<<endl;
-                int rd=rand()% nStaticTemp.size();
-                if(nStaticTemp[rd]->edges.size()<maxEdge){
-                    insertEdge(0,temp->coord,nStaticTemp[rd]->coord);
-                    scene->addLine(temp->coord[1]*len,temp->coord[0]*len,
-                                   nStaticTemp[rd]->coord[1]*len,nStaticTemp[rd]->coord[0]*len,
-                                   outlinePen);
-                }
-                else
-                    nStaticTemp.erase(nStaticTemp.begin()+rd);
+    while(nStaticTemp.size()>0){
+        globalTemp=nStaticTemp[0];
+        nStaticTemp=sortStaticTemp(nStaticTemp);
+        printVectorNodo(nStaticTemp);
+        for(int x=1;x<maxEdge and x<nStaticTemp.size();x++){
+            if(nStaticTemp[0]->edges.size()<maxEdge and nStaticTemp[x]->edges.size()<maxEdge){
+                insertEdge(0,nStaticTemp[0]->coord,nStaticTemp[x]->coord);
+                scene->addLine(nStaticTemp[0]->coord[1]*len,nStaticTemp[0]->coord[0]*len,
+                                                  nStaticTemp[x]->coord[1]*len,nStaticTemp[x]->coord[0]*len,
+               outlinePen);
             }
-            nStaticTemp.erase(nStaticTemp.begin());
+
         }
-        else
-            nStaticTemp.erase(nStaticTemp.begin());
+        nStaticTemp.erase(nStaticTemp.begin());
+
+
     }
+
+
 }
 
 string Graph::searchBlind(QGraphicsScene * scene,QPen outlinePen,int * begin, int * end){
@@ -99,10 +110,23 @@ Edge* Graph::searchEdge(int *nA, int *nB){
 }
 
 bool Graph::insertNode(int *posNode){
+    int positionBase[2]={0,0};
     if(searchNode(posNode)==NULL){
         Node* tempNode=new Node(posNode);
         nodes[posNode[0]][posNode[1]]=tempNode;
-        nStatic.push_back(tempNode);
+        /* Insercion a nStatic ordenado*/
+        Node* tempAnterior=NULL;
+        int size=nStatic.size();
+        if(size>0)
+            tempAnterior=nStatic[nStatic.size()-1];
+        while(size!=0 and distanciaEuclidiana(posNode,positionBase)<distanciaEuclidiana(tempAnterior->coord,positionBase)){
+            size--;
+            tempAnterior=nStatic[size-1];
+        }
+
+        nStatic.insert(nStatic.begin()+size,tempNode);
+        /*Solo usado para cuadricular*/
+
         tempNode->printNode();
         return true;
     }
@@ -118,10 +142,12 @@ bool Graph::insertEdge(int peso,int *nA, int *nB){
         nodeB->edges.push_back(tempEdge);
         return true;
     }
-    else
-        return false;
-}
+    else{
 
+        return false;
+
+    }
+}
 bool Graph::deleteEdge(int *nA, int *nB){
     Edge* edgeTemp;
     Node* nodeA=searchNode(nA);
@@ -251,7 +277,13 @@ void Graph::aStar(int *inicio, int *final){
     }
 }
 
-int Graph::distanciaEuclidiana(int *A, int *B){
-    return abs(A[0]-B[0])+abs(A[1]-B[1]);
+
+
+bool compareEuclidiana(Node*A,Node*B){
+    return distanciaEuclidiana(A->coord,globalTemp->coord)<distanciaEuclidiana(B->coord,globalTemp->coord);
 }
 
+vector<Node*> Graph::sortStaticTemp(vector<Node *>V){
+    stable_sort(V.begin(),V.end(),compareEuclidiana);
+    return V;
+}
