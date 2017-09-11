@@ -30,7 +30,8 @@ struct Graph{
     //void graphicsNode(QGraphicsScene *,int *);
 
     void aStar(int*,int*);//Busqueda desde un nodo inicial y final
-    int distanciaEuclidiana(int*,int*);
+    //int distanciaEuclidiana(int*,int*);
+    vector<Node*> sortStaticTemp(vector<Node*>);
 };
 
 
