@@ -1,6 +1,5 @@
 #include "graph.h"
 
-
 /* Implementacion grafo */
 Graph::Graph(int*tam){
     size[0]=tam[0];
@@ -31,10 +30,13 @@ void Graph::cuadricular(){
     while (nStaticTemp.size()>1) {
         Node* temp=nStaticTemp[0];
         if(temp->edges.size()<maxEdge){
-            while ( temp->edges.size()<maxEdge and nStaticTemp.size()>0) {
-                cout<<"hola"<<endl;
+            while ( temp->edges.size()<maxEdge and nStaticTemp.size()>0){
                 int rd=rand()% nStaticTemp.size();
-                if(nStaticTemp[rd]->edges.size()<maxEdge){
+                cout<<"rd "<<rd<<endl;
+                temp->printNode();
+                cout<<"otro"<<endl;
+                nStaticTemp[rd]->printNode();
+                if(nStaticTemp[rd]->edges.size()<maxEdge and nStaticTemp[rd]!=temp and searchEdge(temp->coord,nStaticTemp[rd]->coord)){
                     insertEdge(0,temp->coord,nStaticTemp[rd]->coord);
                 }
                 else
@@ -109,16 +111,26 @@ bool Graph::insertNode(int *posNode){
 bool Graph::insertEdge(int peso,int *nA, int *nB){
     Node* nodeA=searchNode(nA);
     Node* nodeB=searchNode(nB);
+    if(nodeA->shareEdge(nodeB)==NULL){
+        cout<<"no comparten nodo"<<endl;
+    }
+    else{
+        cout<<"comparten nodo"<<endl;
+    }
+
     if(nodeA!=NULL and nodeB!=NULL and nodeA->shareEdge(nodeB)==NULL and nodeA!=nodeB){
         Edge* tempEdge=new Edge(peso,nodeA,nodeB);
         nodeA->edges.push_back(tempEdge);
         nodeB->edges.push_back(tempEdge);
+        cout<<"si insertor"<<endl;
         return true;
     }
-    else
+    else{
+        cout<<"no inserto"<<endl;
         return false;
-}
 
+    }
+}
 bool Graph::deleteEdge(int *nA, int *nB){
     Edge* edgeTemp;
     Node* nodeA=searchNode(nA);
