@@ -16,8 +16,10 @@ Node::Node(int*position){
     gN=fN=hN=0;
 }
 
-void Node::printNode(){
+string Node::printNode(){
+    string nodo="["+to_string(coord[0])+"]["+to_string(coord[1])+"]";
     cout<<"["<<coord[0]<<"]["<<coord[1]<<"] ";
+    return nodo;
 }
 
 void Node::printEdges(){
