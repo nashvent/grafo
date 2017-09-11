@@ -31,8 +31,14 @@ void Graph::cuadricular(){
     while (nStaticTemp.size()>1) {
         Node* temp=nStaticTemp[0];
         if(temp->edges.size()<maxEdge){
-            while ( temp->edges.size()<maxEdge) {
-                insertEdge(1+rand() % 5,temp->coord,nStaticTemp[rand()% nStaticTemp.size()]->coord);
+            while ( temp->edges.size()<maxEdge and nStaticTemp.size()>0) {
+                cout<<"hola"<<endl;
+                int rd=rand()% nStaticTemp.size();
+                if(nStaticTemp[rd]->edges.size()<maxEdge){
+                    insertEdge(0,temp->coord,nStaticTemp[rd]->coord);
+                }
+                else
+                    nStaticTemp.erase(nStaticTemp.begin()+rd);
             }
             nStaticTemp.erase(nStaticTemp.begin());
         }
@@ -58,11 +64,15 @@ vector<Node *> Graph::searchBlind(int * begin, int * end){
         for (int i = 0; i < temp->edges.size(); i++) {
             Node * p=temp->edges[i]->whoBelongEdge(temp);
             if(p->visit==false){
+                p->visit=true;
                 result.push_back(p);
-                p->printNode();
             }
         }
+        for (int k = 0; k < result.size(); ++k) {
+            result[k]->printNode();
+        }
         cout<<endl;
+
     }
 
     return result;
@@ -183,9 +193,9 @@ void Graph::aStar(int *inicio, int *final){
     vector<Node*>openList,closeList;
     openList.push_back(current);
     while(openList.size()>0 and current!=fin){
-        Node* current=openList[0];
+        current=openList[0];
         for(int x=0;x<current->edges.size();x++){
-            Node*vecino=current->edges[x]->whoBelongEdge(curret);
+            Node*vecino=current->edges[x]->whoBelongEdge(current);
             if(vecino->aStarVisit==false){
                 int gN=current->edges[x]->weight;
                 int hN=distanciaEuclidiana(vecino->coord,fin->coord);
@@ -208,7 +218,7 @@ void Graph::aStar(int *inicio, int *final){
         }
         current->aStarVisit=true;
         openList.erase(openList.begin());
-        current=openList[0];
+
     }
     if(openList.size()==0){
         cout<<"No hay camino"<<endl;
