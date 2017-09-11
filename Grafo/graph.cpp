@@ -44,19 +44,16 @@ void Graph::cuadricular(){
     }
 }
 
-vector<Node *> Graph::searchBlind(int * begin, int * end){
+void Graph::searchBlind(int * begin, int * end){
     vector<Node*> result;
-    Node * x=searchNode(begin);
     Node * y=searchNode(end);
-    cout<<endl;
-    x->printNode();
-    y->printNode();
-    cout<<"recorre"<<endl;
-    result.push_back(x);
+    result.push_back(searchNode(begin));
 
     while(result[0]->coord != y->coord){
         Node * temp=result[0];
         temp->visit=true;
+        temp->printNode();
+        cout<<" -> ";
         result.erase(result.begin());
         for (int i = 0; i < temp->edges.size(); i++) {
             Node * p=temp->edges[i]->whoBelongEdge(temp);
@@ -65,14 +62,8 @@ vector<Node *> Graph::searchBlind(int * begin, int * end){
                 result.push_back(p);
             }
         }
-        for (int k = 0; k < result.size(); ++k) {
-            result[k]->printNode();
-        }
-        cout<<endl;
-
     }
-
-    return result;
+    result[0]->printNode();
 }
 
 Node* Graph::searchNode(int *pos){

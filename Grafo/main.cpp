@@ -6,7 +6,7 @@ int main(int argc, char *argv[]){
     int tam[2]={10,10};
     Graph *grafo=new Graph(tam);
 
-    grafo->randomInsert(100);
+    grafo->randomInsert(6);
     cout<<"ADD EDGES"<<endl;
     grafo->cuadricular();
     grafo->printStatic();

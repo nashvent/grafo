@@ -18,7 +18,7 @@ struct Graph{
     bool checkDimension(int*,int*);
     void randomInsert(int);//Inserta una cantidad de nodos
     void cuadricular();
-    vector<Node*> searchBlind(int*,int*);
+    void searchBlind(int*,int*);
     void print();
     void printStatic();
 };
