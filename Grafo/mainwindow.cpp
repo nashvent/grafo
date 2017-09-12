@@ -6,6 +6,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->lb_i->setStyleSheet("QLabel{ background-color : blue; color : white; }");
+    ui->lb_i->setAlignment(Qt::AlignCenter);
+    ui->lb_f->setStyleSheet("QLabel{ background-color : green; color : white; }");
+    ui->lb_f->setAlignment(Qt::AlignCenter);
 }
 
 void MainWindow::graphicsNode(int tam,int size)
@@ -21,9 +25,16 @@ void MainWindow::graphicsNode(int tam,int size)
     g->randomInsert(scene,redBrush,outlinePen,tam);
     g->cuadricular(scene,outlinePen);
     g->print();
-    cout<<"\n aristas"<<endl;
     g->printStatic();
-
+/*
+    cout<<"inicio: ";
+    g->nStatic[0]->printNode();
+    cout<<"fin: ";
+    g->nStatic[g->nStatic.size()-1]->printNode();
+    cout<<endl;
+    cout<<"A*"<<endl;
+    //g->aStar(g->nStatic[0]->coord,g->nStatic[1]->coord);
+*/
 }
 
 MainWindow::~MainWindow()
@@ -36,8 +47,8 @@ void MainWindow::on_pushButton_clicked()
     QPen outlinePen(Qt::red);
     QBrush ini(Qt::blue);
     QBrush fin(Qt::green);
+    QBrush yellow(Qt::yellow);
     QPen arista(Qt::black);
-
 
     QString x,y,a,b;
     x= ui->i_x->text();
@@ -46,8 +57,57 @@ void MainWindow::on_pushButton_clicked()
     b= ui->f_y->text();
     int p1[2]={x.toInt(),y.toInt()};
     int p2[2]={a.toInt(),b.toInt()};
-    g->colorNode(scene,arista,ini,fin,p1,p2);
-    string result=g->searchBlind(scene,outlinePen,p1,p2);
-    QString qstr = QString::fromStdString(result);
-    ui->lb_result->setText(qstr);
+    if(g->searchNode(p1) && g->searchNode(p2)){
+        g->delColor(scene,yellow,arista);
+        g->colorNode(scene,arista,ini,fin,p1,p2);
+        string res=g->searchBlind(scene,outlinePen,p1,p2);
+        Dialog *dialog= new Dialog();
+        dialog->result(res);
+        dialog->show();
+    }
+    else{
+        QMessageBox reply;
+        reply.question(this, "Alerta", "No existen estos puntos",
+             QMessageBox::Ok);
+    }
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+
+    QPen outlinePen(Qt::red);
+    QBrush ini(Qt::blue);
+    QBrush fin(Qt::green);
+    QBrush yellow(Qt::yellow);
+    QPen arista(Qt::black);
+
+    QString x,y,a,b;
+    x= ui->i_x->text();
+    y= ui->i_y->text();
+    a= ui->f_x->text();
+    b= ui->f_y->text();
+    int p1[2]={x.toInt(),y.toInt()};
+    int p2[2]={a.toInt(),b.toInt()};
+    if(g->searchNode(p1) && g->searchNode(p2)){
+        g->delColor(scene,yellow,arista);
+        g->colorNode(scene,arista,ini,fin,p1,p2);
+        string resA=g->aStar(scene,outlinePen,p1,p2);
+        cout<<"resA"<<resA<<endl;
+        Dialog *dialog= new Dialog();
+        dialog->result(resA);
+        dialog->show();
+    }
+    else{
+        QMessageBox reply;
+        reply.question(this, "Alerta", "No existen estos puntos",
+             QMessageBox::Ok);
+    }
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    QString n,tam;
+    n=ui->n_nodes->text();
+    tam=ui->n_tam->text();
+    graphicsNode(n.toInt(),tam.toInt());
 }

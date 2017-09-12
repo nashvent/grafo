@@ -27,10 +27,12 @@ struct Graph{
     void print();
     void printStatic();
     void colorNode(QGraphicsScene *,QPen,QBrush,QBrush,int*,int*);
-    //void graphicsNode(QGraphicsScene *,int *);
+    void delVisit(); //quita visit de todos los nodos
+    void delColor(QGraphicsScene *,QBrush,QPen);//colorea todos normalmente
 
-    void aStar(int*,int*);//Busqueda desde un nodo inicial y final
-    int distanciaEuclidiana(int*,int*);
+    string aStar(QGraphicsScene *,QPen,int*,int*);//Busqueda desde un nodo inicial y final
+    //int distanciaEuclidiana(int*,int*);
+    vector<Node*> sortStaticTemp(vector<Node*>);
 };
 
 

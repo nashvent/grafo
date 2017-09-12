@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>754</width>
+    <width>773</width>
     <height>549</height>
    </rect>
   </property>
@@ -42,7 +42,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Inicio (x,y):  (</string>
+         <string>Inicio (x,y): (</string>
         </property>
        </widget>
       </item>
@@ -84,7 +84,7 @@
          </font>
         </property>
         <property name="text">
-         <string>)  Fin (x,y):  (</string>
+         <string>)  Fin (x,y): (</string>
         </property>
        </widget>
       </item>
@@ -138,7 +138,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Búsqueda Ciega</string>
+         <string>Busqueda Amplitud</string>
         </property>
        </widget>
       </item>
@@ -150,7 +150,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Búsqueda A*</string>
+         <string>Busqueda A*</string>
         </property>
        </widget>
       </item>
@@ -159,24 +159,102 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="topMargin">
-       <number>20</number>
+       <number>0</number>
       </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_7">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string># Nodos</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="n_nodes"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_8">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Tamaño</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="n_tam"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Recargar</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lb_i">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::RightToLeft</enum>
+          </property>
+          <property name="text">
+           <string>Inicio</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lb_f">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Final</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
       <item>
        <widget class="QGraphicsView" name="graphicsView">
         <property name="sizeAdjustPolicy">
          <enum>QAbstractScrollArea::AdjustToContents</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="lb_result">
-        <property name="font">
-         <font>
-          <pointsize>11</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Resultado:</string>
         </property>
        </widget>
       </item>
