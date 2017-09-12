@@ -27,8 +27,8 @@ struct Graph{
     void print();
     void printStatic();
     void colorNode(QGraphicsScene *,QPen,QBrush,QBrush,int*,int*);
-    void delVisit();
-    void delColor(QGraphicsScene *,QBrush,QPen);
+    void delVisit(); //quita visit de todos los nodos
+    void delColor(QGraphicsScene *,QBrush,QPen);//colorea todos normalmente
 
     string aStar(QGraphicsScene *,QPen,int*,int*);//Busqueda desde un nodo inicial y final
     //int distanciaEuclidiana(int*,int*);
